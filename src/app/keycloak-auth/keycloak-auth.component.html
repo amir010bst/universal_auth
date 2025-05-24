@@ -1,0 +1,94 @@
+<div class="keycloak-auth-container">
+  <h1 class="title">Angular + Keycloak SSO</h1>
+
+  <div *ngIf="!keycloakInitialized" class="loading-indicator">
+    <svg class="animate-spin h-8 w-8 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+    </svg>
+    <p class="ml-4 text-gray-700">Initializing Keycloak...</p>
+  </div>
+
+  <div *ngIf="error" class="error-alert">
+    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+    </svg>
+    <div class="alert-content">
+      <h3 class="alert-title">Error</h3>
+      <p class="alert-description">{{ error }}</p>
+    </div>
+  </div>
+
+  <div *ngIf="keycloakInitialized" class="content-wrapper">
+    <div *ngIf="isAuthenticated; else notAuthenticated" class="auth-status-authenticated">
+      <div class="flex items-center gap-2 mb-2">
+        <svg class="h-5 w-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <p class="text-green-700 font-medium">Authenticated!</p>
+      </div>
+      <p class="text-gray-700">
+        Welcome, {{ userProfile?.firstName }} {{ userProfile?.lastName }}!
+      </p>
+      <p class="text-gray-700">
+        Username: {{ userProfile?.username || 'N/A' }}
+      </p>
+      <p class="text-gray-700">
+        Email: {{ userProfile?.email || 'N/A' }}
+      </p>
+
+      <div *ngIf="userInfo" class="user-info-section">
+        <h3 class="font-semibold text-gray-900">User Info (from endpoint):</h3>
+        <p class="text-sm text-gray-700">Sub: {{ userInfo.sub }}</p>
+        <p class="text-sm text-gray-700">Name: {{ userInfo.name }}</p>
+        <p class="text-sm text-gray-700">Given Name: {{ userInfo.given_name }}</p>
+        <p class="text-sm text-gray-700">Family Name: {{ userInfo.family_name }}</p>
+        <p class="text-sm text-gray-700">Email: {{ userInfo.email }}</p>
+      </div>
+    </div>
+    <ng-template #notAuthenticated>
+      <p class="mb-6 text-gray-700">
+        Please log in to access the application.
+      </p>
+    </ng-template>
+
+    <div class="action-buttons-grid">
+      <ng-container *ngIf="!isAuthenticated; else authenticatedButtons">
+        <button (click)="login()" class="btn btn-primary">Login</button>
+        <button (click)="register()" class="btn btn-success">Register</button>
+      </ng-container>
+      <ng-template #authenticatedButtons>
+        <button (click)="logout()" class="btn btn-danger">Logout</button>
+      </ng-template>
+
+      <button (click)="accountManagement()" class="btn btn-secondary">Account Management</button>
+      <button (click)="checkRoles()" class="btn btn-info">Check Roles</button>
+      <button (click)="getProfile()" class="btn btn-warning">Get User Profile</button>
+      <button (click)="getRefreshToken()" class="btn btn-teal">Refresh Token</button>
+      <button (click)="clearTokens()" class="btn btn-orange">Clear Tokens</button>
+      <button (click)="isTokenExpired()" class="btn btn-indigo">Is Token Expired</button>
+      <button (click)="getUserInfo()" class="btn btn-pink">Get User Info</button>
+      <button (click)="createLoginUrl()" class="btn btn-lime">Create Login URL</button>
+      <button (click)="createLogoutUrl()" class="btn btn-cyan">Create Logout URL</button>
+      <button (click)="createRegisterUrl()" class="btn btn-amber">Create Register URL</button>
+      <button (click)="createAccountUrl()" class="btn btn-fuchsia">Create Account URL</button>
+      <button (click)="getKeycloakInstance()" class="btn btn-dark-gray">Get Keycloak Instance</button>
+      <button (click)="onReady()" class="btn btn-black">On Ready</button>
+    </div>
+
+    <div *ngIf="isAuthenticated && (token || idToken || refreshToken)" class="token-display-section">
+      <h2 class="text-lg font-semibold mb-2 text-gray-900">Tokens:</h2>
+      <div class="token-box">
+        <p class="text-sm text-gray-700">
+          <span class="font-medium">Token:</span> {{ token || 'N/A' }}
+        </p>
+        <p class="text-sm text-gray-700">
+          <span class="font-medium">ID Token:</span> {{ idToken || 'N/A' }}
+        </p>
+        <p class="text-sm text-gray-700">
+          <span class="font-medium">Refresh Token:</span> {{ refreshToken || 'N/A' }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
