@@ -1,0 +1,116 @@
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 200px;
+}
+
+.sidenav-content {
+  padding: 16px;
+}
+
+.mat-toolbar-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.container {
+  padding: 16px;
+}
+
+.attendance {
+  margin-bottom: 20px;
+
+  h2 {
+    margin-top: 0;
+    margin-bottom: 16px;
+  }
+
+  .attendance-cards {
+    display: flex;
+    gap: 16px;
+
+    mat-card {
+      flex: 1;
+    }
+
+    .attendance-item {
+      text-align: center;
+
+      .label {
+        color: rgba(0, 0, 0, 0.6);
+        font-size: 14px;
+        margin-bottom: 4px;
+      }
+
+      .count {
+        font-size: 24px;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+.upcoming-leaves {
+  margin-bottom: 20px;
+
+  h2 {
+    margin-top: 0;
+    margin-bottom: 16px;
+  }
+
+  mat-card {
+    margin-bottom: 12px;
+  }
+
+  .upcoming-leave-item {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+
+    .icon {
+      margin-right: 16px;
+      color: primary; // You might want to define a primary color
+    }
+
+    .details {
+      .date {
+        font-weight: 500;
+      }
+
+      .reason {
+        color: rgba(0, 0, 0, 0.6);
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+.tasks {
+  h2 {
+    margin-top: 0;
+    margin-bottom: 16px;
+  }
+
+  mat-card {
+    padding: 16px;
+
+    mat-list {
+      padding: 0;
+
+      .mat-list-item {
+        padding: 8px 0;
+      }
+
+      .mat-icon {
+        margin-right: 16px;
+      }
+    }
+  }
+}
